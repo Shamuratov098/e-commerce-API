@@ -17,8 +17,12 @@ class PhotoFactory extends Factory
      */
     public function definition(): array
     {
+        $width = fake()->randomElement([400, 600, 800, 1200]);
+        $height = fake()->randomElement([400, 600, 800, 1200]);
+
         return [
-            //
+            'image_url' => 'https://picsum.photos/'.$width.'/'.$height,
+            'is_main' => fake()->boolean(30),
         ];
     }
 }

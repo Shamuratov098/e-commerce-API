@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Reviews;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +19,9 @@ class ReviewsFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => User::factory(),
+            'comment' => fake()->paragraph(2),
+            'rating' => fake()->randomElement(['1', '2', '3', '4', '5']),
         ];
     }
 }
