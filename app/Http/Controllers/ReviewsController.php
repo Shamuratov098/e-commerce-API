@@ -4,63 +4,53 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreReviewsRequest;
 use App\Http\Requests\UpdateReviewsRequest;
+use App\Models\Product;
 use App\Models\Reviews;
+use App\Services\ReviewService;
+use Illuminate\Http\JsonResponse;
 
 class ReviewsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(
+        private readonly ReviewService $reviewService
+    ) {}
+
+    public function indexForProduct(Product $product): JsonResponse
     {
-        //
+        $reviews = $this->reviewService->indexForProduct($product->id);
+
+        return response()->json($reviews);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(StoreReviewsRequest $request, Product $product): JsonResponse
     {
-        //
+        $this->authorize('create', Reviews::class);
+        $review = $this->reviewService->store($request->validated(), $product->id);
+
+        return response()->json([
+            'message' => 'Review created successfully',
+            'review' => $review,
+        ], 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreReviewsRequest $request)
+    public function update(UpdateReviewsRequest $request, Reviews $review): JsonResponse
     {
-        //
+        $this->authorize('update', $review);
+        $review = $this->reviewService->update($review, $request->validated());
+
+        return response()->json([
+            'message' => 'Review updated successfully',
+            'review' => $review,
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Reviews $reviews)
+    public function destroy(Reviews $review): JsonResponse
     {
-        //
-    }
+        $this->authorize('delete', $review);
+        $this->reviewService->destroy($review);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Reviews $reviews)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateReviewsRequest $request, Reviews $reviews)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Reviews $reviews)
-    {
-        //
+        return response()->json([
+            'message' => 'Review deleted successfully',
+        ]);
     }
 }

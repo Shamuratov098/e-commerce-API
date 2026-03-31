@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Str;
 
 #[Fillable(['category_id', 'brand_id', 'name', 'description', 'stock_quantity', 'status', 'slug', 'weight', 'price'])]
 class Product extends Model
@@ -30,6 +31,19 @@ class Product extends Model
             'stock_quantity' => 'integer',
             'status' => 'string',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function ($product) {
+            $product->slug = Str::slug($product->name);
+        });
+
+        static::updating(function ($product) {
+            if ($product->isDirty('name')) {
+                $product->slug = Str::slug($product->name);
+            }
+        });
     }
 
     /**

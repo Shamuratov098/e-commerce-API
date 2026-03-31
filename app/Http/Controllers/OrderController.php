@@ -3,64 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderRequest;
-use App\Http\Requests\UpdateOrderRequest;
+use App\Http\Requests\UpdateOrderStatusRequest;
 use App\Models\Order;
+use App\Services\OrderService;
+use Illuminate\Http\JsonResponse;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(
+        private readonly OrderService $orderService
+    ) {}
+
+    public function index(): JsonResponse
     {
-        //
+        $orders = $this->orderService->index();
+
+        return response()->json($orders);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(StoreOrderRequest $request): JsonResponse
     {
-        //
+        $order = $this->orderService->store($request->validated());
+
+        return response()->json([
+            'message' => 'Order created successfully',
+            'order' => $order,
+        ], 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreOrderRequest $request)
+    public function show(Order $order): JsonResponse
     {
-        //
+        $this->authorize('view', $order);
+        $order = $this->orderService->show($order);
+
+        return response()->json($order);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Order $order)
+    public function updateStatus(UpdateOrderStatusRequest $request, Order $order): JsonResponse
     {
-        //
+        $order = $this->orderService->updateStatus($order, $request->input('status'));
+
+        return response()->json([
+            'message' => 'Order status updated',
+            'order' => $order,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Order $order)
+    public function destroy(Order $order): JsonResponse
     {
-        //
-    }
+        $this->authorize('delete', $order);
+        $this->orderService->destroy($order);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateOrderRequest $request, Order $order)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Order $order)
-    {
-        //
+        return response()->json([
+            'message' => 'Order deleted successfully',
+        ]);
     }
 }

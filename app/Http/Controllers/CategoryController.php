@@ -5,62 +5,55 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Services\CategoryService;
+use Illuminate\Http\JsonResponse;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(
+        private readonly CategoryService $categoryService
+    ) {}
+
+    public function index(): JsonResponse
     {
-        //
+        $categories = $this->categoryService->index();
+
+        return response()->json($categories);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(StoreCategoryRequest $request): JsonResponse
     {
-        //
+        $category = $this->categoryService->store($request->validated());
+
+        return response()->json([
+            'message' => 'Category created successfully',
+            'category' => $category,
+        ], 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreCategoryRequest $request)
+    public function show(Category $category): JsonResponse
     {
-        //
+        $category = $this->categoryService->show($category);
+
+        return response()->json($category);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category): JsonResponse
     {
-        //
+        $category = $this->categoryService->update($category, $request->validated());
+
+        return response()->json([
+            'message' => 'Category updated successfully',
+            'category' => $category,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Category $category)
+    public function destroy(Category $category): JsonResponse
     {
-        //
-    }
+        $this->categoryService->destroy($category);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCategoryRequest $request, Category $category)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Category $category)
-    {
-        //
+        return response()->json([
+            'message' => 'Category deleted successfully',
+        ]);
     }
 }

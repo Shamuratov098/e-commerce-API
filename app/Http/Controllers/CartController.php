@@ -5,62 +5,48 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\UpdateCartRequest;
 use App\Models\Cart;
+use App\Services\CartService;
+use Illuminate\Http\JsonResponse;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(
+        private CartService $cartService
+    ) {}
+
+    public function index(): JsonResponse
     {
-        //
+        $carts = $this->cartService->index();
+
+        return response()->json($carts);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(StoreCartRequest $request): JsonResponse
     {
-        //
+        $cart = $this->cartService->store($request->validated());
+
+        return response()->json([
+            'message' => 'Product added to cart',
+            'cart' => $cart,
+        ], 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreCartRequest $request)
+    public function update(UpdateCartRequest $request, Cart $cart): JsonResponse
     {
-        //
+        $cart = $this->cartService->update($cart, $request->validated());
+
+        return response()->json([
+            'message' => 'Cart updated successfully',
+            'cart' => $cart,
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Cart $cart)
+    public function destroy(Cart $cart): JsonResponse
     {
-        //
-    }
+        $this->cartService->destroy($cart);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCartRequest $request, Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Cart $cart)
-    {
-        //
+        return response()->json([
+            'message' => 'Item removed from cart',
+        ]);
     }
 }
