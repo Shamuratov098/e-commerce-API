@@ -3,81 +3,100 @@
 @section('title', 'Yangi Kategoriya')
 
 @section('content')
-<!-- Page Header -->
-<div class="mb-8">
-    <h1 class="text-3xl font-bold text-gray-800">Yangi Kategoriya</h1>
-    <p class="text-gray-600 mt-2">Yangi kategoriya yaratish</p>
+
+<!-- Breadcrumb -->
+<div style="display:flex; align-items:center; gap:8px; margin-bottom:20px; font-size:13px;">
+    <a href="{{ route('admin.categories.index') }}" style="color:#5750F1; text-decoration:none; font-weight:500;">Kategoriyalar</a>
+    <svg width="14" height="14" fill="none" stroke="#8899A8" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+    </svg>
+    <span style="color:#8899A8;">Yangi kategoriya</span>
 </div>
 
 <!-- Form Card -->
-<div class="bg-white rounded-lg shadow-md max-w-2xl">
-    <div class="p-6">
-        <form action="{{ route('admin.categories.store') }}" method="POST">
-            @csrf
+<div style="max-width:600px;">
+    <div style="background:#fff; border-radius:12px; border:1px solid #F3F4F6; box-shadow:0 1px 4px rgba(0,0,0,.06); overflow:hidden;">
 
-            <!-- Name Field -->
-            <div class="mb-6">
-                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                    Kategoriya Nomi <span class="text-red-500">*</span>
-                </label>
-                <input
-                    type="text"
-                    name="title"
-                    id="title"
-                    value="{{ old('title') }}"
-                    required
-                    class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
-                    placeholder="Masalan: Elektronika"
-                    oninput="generateSlug(this.value)"
-                >
-                @error('name')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
+        <!-- Card Header -->
+        <div style="padding:20px 24px; border-bottom:1px solid #F3F4F6;">
+            <h2 style="font-size:15px; font-weight:700; color:#1C2434; margin:0 0 2px;">Kategoriya ma'lumotlari</h2>
+            <p style="font-size:12px; color:#8899A8; margin:0;">Yangi kategoriya uchun ma'lumotlarni kiriting</p>
+        </div>
 
-            <!-- Slug Field -->
-            <div class="mb-6">
-                <label for="slug" class="block text-sm font-medium text-gray-700 mb-2">
-                    Slug (URL uchun)
-                </label>
-                <div class="relative">
+        <!-- Card Body -->
+        <div style="padding:24px;">
+            <form action="{{ route('admin.categories.store') }}" method="POST">
+                @csrf
+
+                <!-- Title Field -->
+                <div style="margin-bottom:20px;">
+                    <label for="title" style="display:block; font-size:13px; font-weight:600; color:#1C2434; margin-bottom:8px;">
+                        Kategoriya Nomi <span style="color:#EF4444;">*</span>
+                    </label>
                     <input
                         type="text"
-                        name="slug"
-                        id="slug"
-                        value="{{ old('slug') }}"
-                        class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors bg-gray-50"
-                        placeholder="elektronika"
+                        name="title"
+                        id="title"
+                        value="{{ old('title') }}"
+                        required
+                        oninput="generateSlug(this.value)"
+                        placeholder="Masalan: Elektronika"
+                        style="width:100%; padding:10px 14px; border:1.5px solid #E8E8E8; border-radius:8px; font-size:13px; color:#1C2434; outline:none; box-sizing:border-box; transition:border .2s;"
+                        onfocus="this.style.borderColor='#5750F1'" onblur="this.style.borderColor='#E8E8E8'"
                     >
-                    <button type="button" onclick="generateSlug(document.getElementById('name').value)" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-indigo-600 hover:text-indigo-800 text-sm">
-                        Yangilash
+                    @error('title')
+                        <p style="margin:6px 0 0; font-size:12px; color:#EF4444;">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Slug Field -->
+                <div style="margin-bottom:24px;">
+                    <label for="slug" style="display:block; font-size:13px; font-weight:600; color:#1C2434; margin-bottom:8px;">
+                        Slug <span style="font-size:12px; color:#8899A8; font-weight:400;">(URL uchun)</span>
+                    </label>
+                    <div style="position:relative;">
+                        <input
+                            type="text"
+                            name="slug"
+                            id="slug"
+                            value="{{ old('slug') }}"
+                            placeholder="elektronika"
+                            style="width:100%; padding:10px 100px 10px 14px; border:1.5px solid #E8E8E8; border-radius:8px; font-size:13px; color:#1C2434; outline:none; box-sizing:border-box; background:#F7F9FC;"
+                            onfocus="this.style.borderColor='#5750F1'" onblur="this.style.borderColor='#E8E8E8'"
+                        >
+                        <button type="button" onclick="generateSlug(document.getElementById('title').value)"
+                                style="position:absolute; right:8px; top:50%; transform:translateY(-50%); padding:4px 10px; background:#EEF2FF; color:#5750F1; border:none; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer;">
+                            Yangilash
+                        </button>
+                    </div>
+                    <p style="margin:6px 0 0; font-size:12px; color:#8899A8;">Bo'sh qoldirsangiz, nomdan avtomatik yaratiladi.</p>
+                    @error('slug')
+                        <p style="margin:6px 0 0; font-size:12px; color:#EF4444;">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Buttons -->
+                <div style="display:flex; align-items:center; justify-content:flex-end; gap:12px; padding-top:20px; border-top:1px solid #F3F4F6;">
+                    <a href="{{ route('admin.categories.index') }}"
+                       style="padding:9px 20px; border:1.5px solid #E8E8E8; color:#637381; border-radius:8px; text-decoration:none; font-size:13px; font-weight:600; transition:all .2s;">
+                        Bekor qilish
+                    </a>
+                    <button type="submit"
+                            style="padding:9px 20px; background:#5750F1; color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:background .2s;">
+                        Saqlash
                     </button>
                 </div>
-                <p class="mt-2 text-sm text-gray-500">Agar bo'sh qoldirsangiz, avtomatik yaratiladi.</p>
-                @error('slug')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <!-- Buttons -->
-            <div class="flex items-center justify-end space-x-4 pt-4 border-t border-gray-200">
-                <a href="{{ route('admin.categories.index') }}" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium">
-                    Bekor qilish
-                </a>
-                <button type="submit" class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium">
-                    Saqlash
-                </button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
+
 @endsection
 
 @section('scripts')
 <script>
-
-    function generateSlug(title) {
-        document.getElementById('slug').value = title
+    function generateSlug(value) {
+        document.getElementById('slug').value = value
             .toLowerCase()
             .trim()
             .replace(/[^\w\s-]/g, '')

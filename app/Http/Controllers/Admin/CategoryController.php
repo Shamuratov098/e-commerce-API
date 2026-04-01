@@ -70,13 +70,13 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category): RedirectResponse
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name,'.$category->id,
+            'title' => 'required|string|max:255|unique:categories,title,'.$category->id,
             'slug' => 'nullable|string|max:255|unique:categories,slug,'.$category->id,
         ]);
 
         // Auto-generate slug if not provided
         if (empty($validated['slug'])) {
-            $validated['slug'] = Str::slug($validated['name']);
+            $validated['slug'] = Str::slug($validated['title']);
         }
 
         $this->categoryService->update($category, $validated);

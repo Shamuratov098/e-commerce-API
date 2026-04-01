@@ -9,134 +9,103 @@
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     @yield('styles')
-    <style>
-        .sidebar-link {
-            display: flex;
-            align-items: center;
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #6b7280;
-            transition: all 0.2s;
-            gap: 10px;
-        }
-        .sidebar-link:hover {
-            background-color: #f3f4f6;
-            color: #111827;
-        }
-        .sidebar-link.active {
-            background-color: #eef2ff;
-            color: #4f46e5;
-        }
-        .sidebar-link.active svg {
-            color: #4f46e5;
-        }
-    </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body style="background:#F7F9FC; min-height:100vh; font-family: sans-serif; margin:0;">
 
-<div class="flex min-h-screen">
+<div style="display:flex; min-height:100vh;">
 
-    <!-- Sidebar -->
-    <aside class="w-64 bg-white shadow-md flex flex-col" style="min-height: 100vh;">
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside style="width:260px; min-width:260px; background:#fff; border-right:1px solid #E8E8E8; display:flex; flex-direction:column; min-height:100vh; position:sticky; top:0; height:100vh; overflow-y:auto;">
 
         <!-- Logo -->
-        <div class="flex items-center px-6 py-5 border-b border-gray-200">
-            <div class="w-9 h-9 bg-indigo-600 rounded-lg flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                </svg>
-            </div>
-            <span class="ml-3 text-lg font-bold text-gray-800">Admin Panel</span>
+        <div style="padding:24px 20px 20px; border-bottom:1px solid #F3F4F6;">
+            <a href="{{ route('admin.dashboard') }}" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
+                <div style="width:36px; height:36px; background:#5750F1; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                    <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <span style="font-size:18px; font-weight:700; color:#1C2434;">Admin Panel</span>
+            </a>
         </div>
 
         <!-- Navigation -->
-        <nav class="flex-1 px-4 py-6 space-y-1">
+        <nav style="flex:1; padding:20px 12px;">
 
-            <!-- Dashboard -->
+            <p style="font-size:11px; font-weight:600; color:#8899A8; letter-spacing:.08em; padding:0 8px; margin-bottom:10px;">MAIN MENU</p>
+
             <a href="{{ route('admin.dashboard') }}"
-               class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+               style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:8px; text-decoration:none; margin-bottom:2px; font-size:14px; font-weight:500; transition:all .2s;
+               {{ request()->routeIs('admin.dashboard') ? 'background:rgba(87,80,241,0.07); color:#5750F1;' : 'color:#637381;' }}">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                 </svg>
                 Dashboard
             </a>
 
-            <!-- Categories -->
             <a href="{{ route('admin.categories.index') }}"
-               class="sidebar-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+               style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:8px; text-decoration:none; margin-bottom:2px; font-size:14px; font-weight:500;
+               {{ request()->routeIs('admin.categories.*') ? 'background:rgba(87,80,241,0.07); color:#5750F1;' : 'color:#637381;' }}">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
                 </svg>
                 Kategoriyalar
             </a>
 
-            <!-- Brands -->
             <a href="#"
-               class="sidebar-link {{ request()->routeIs('admin.brands.*') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+               style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:8px; text-decoration:none; margin-bottom:2px; font-size:14px; font-weight:500;
+               {{ request()->routeIs('admin.brands.*') ? 'background:rgba(87,80,241,0.07); color:#5750F1;' : 'color:#637381;' }}">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/>
                 </svg>
                 Brendlar
             </a>
 
-            <!-- Products -->
             <a href="#"
-               class="sidebar-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+               style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:8px; text-decoration:none; margin-bottom:2px; font-size:14px; font-weight:500;
+               {{ request()->routeIs('admin.products.*') ? 'background:rgba(87,80,241,0.07); color:#5750F1;' : 'color:#637381;' }}">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                 </svg>
                 Mahsulotlar
             </a>
 
-            <!-- Orders -->
             <a href="#"
-               class="sidebar-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+               style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:8px; text-decoration:none; margin-bottom:2px; font-size:14px; font-weight:500;
+               {{ request()->routeIs('admin.orders.*') ? 'background:rgba(87,80,241,0.07); color:#5750F1;' : 'color:#637381;' }}">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
                 </svg>
                 Buyurtmalar
             </a>
 
-            <!-- Users -->
             <a href="#"
-               class="sidebar-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+               style="display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:8px; text-decoration:none; margin-bottom:2px; font-size:14px; font-weight:500;
+               {{ request()->routeIs('admin.users.*') ? 'background:rgba(87,80,241,0.07); color:#5750F1;' : 'color:#637381;' }}">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                 </svg>
                 Foydalanuvchilar
             </a>
 
         </nav>
 
-        <!-- User Info + Logout -->
-        <div class="px-4 py-4 border-t border-gray-200">
-            <div class="flex items-center mb-3">
-                <div class="w-9 h-9 bg-indigo-100 rounded-full flex items-center justify-center">
-                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                    </svg>
+        <!-- User + Logout -->
+        <div style="padding:16px 12px; border-top:1px solid #F3F4F6;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; padding:0 8px;">
+                <div style="width:36px; height:36px; min-width:36px; background:#EEF2FF; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                    <span style="font-size:14px; font-weight:600; color:#5750F1;">{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}</span>
                 </div>
-                <div class="ml-3">
-                    <p class="text-sm font-medium text-gray-800">{{ auth()->user()->name ?? 'Admin' }}</p>
-                    <p class="text-xs text-gray-500 truncate">{{ auth()->user()->email ?? '' }}</p>
+                <div style="overflow:hidden;">
+                    <p style="font-size:13px; font-weight:600; color:#1C2434; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ auth()->user()->name ?? 'Admin' }}</p>
+                    <p style="font-size:11px; color:#8899A8; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ auth()->user()->email ?? '' }}</p>
                 </div>
             </div>
             <form method="POST" action="{{ route('admin.logout') }}">
                 @csrf
-                <button type="submit"
-                        class="w-full flex items-center px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                <button type="submit" style="width:100%; display:flex; align-items:center; gap:8px; padding:9px 12px; background:none; border:1px solid #FEE2E2; border-radius:8px; cursor:pointer; font-size:13px; font-weight:500; color:#EF4444;">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                     </svg>
                     Chiqish
                 </button>
@@ -145,60 +114,79 @@
 
     </aside>
 
-    <!-- Main Content -->
-    <div class="flex-1 flex flex-col">
+    <!-- ===================== MAIN CONTENT ===================== -->
+    <div style="flex:1; display:flex; flex-direction:column; min-width:0; overflow:hidden;">
 
-        <!-- Top Header -->
-        <header class="bg-white shadow-sm px-8 py-4 flex items-center justify-between">
-            <h2 class="text-lg font-semibold text-gray-700">@yield('title', 'Dashboard')</h2>
-            <span class="text-sm text-gray-500">{{ now()->format('d.m.Y') }}</span>
+        <!-- Header -->
+        <header style="background:#fff; border-bottom:1px solid #E8E8E8; padding:14px 32px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:30;">
+            <div>
+                <h2 style="font-size:18px; font-weight:700; color:#1C2434; margin:0;">@yield('title', 'Dashboard')</h2>
+                <p style="font-size:12px; color:#8899A8; margin:2px 0 0;">{{ now()->format('d F, Y') }}</p>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:12px;">
+                <!-- Search -->
+                <div style="display:flex; align-items:center; gap:8px; background:#F7F9FC; border:1px solid #E8E8E8; border-radius:8px; padding:8px 14px; width:220px;">
+                    <svg width="16" height="16" fill="none" stroke="#8899A8" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    <input type="text" placeholder="Qidirish..." style="border:none; background:none; outline:none; font-size:13px; color:#637381; width:100%;">
+                </div>
+
+                <!-- Notification -->
+                <div style="position:relative;">
+                    <button style="width:38px; height:38px; background:#F7F9FC; border:1px solid #E8E8E8; border-radius:8px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+                        <svg width="18" height="18" fill="none" stroke="#637381" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                        </svg>
+                        <span style="position:absolute; top:8px; right:8px; width:7px; height:7px; background:#EF4444; border-radius:50%; border:2px solid #fff;"></span>
+                    </button>
+                </div>
+
+                <!-- Avatar -->
+                <div style="width:38px; height:38px; background:#EEF2FF; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; border:2px solid #E8E8E8;">
+                    <span style="font-size:15px; font-weight:700; color:#5750F1;">{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}</span>
+                </div>
+            </div>
         </header>
 
         <!-- Flash Messages -->
         @if(session('success'))
-            <div class="mx-8 mt-4 flash-message">
-                <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg flex items-center justify-between">
-                    <div class="flex items-center">
-                        <svg class="h-5 w-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            <div style="margin:20px 32px 0;">
+                <div style="background:#F0FDF4; border-left:4px solid #22C55E; padding:12px 16px; border-radius:0 8px 8px 0; display:flex; align-items:center; justify-content:space-between;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <svg width="18" height="18" fill="none" stroke="#22C55E" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
-                        <p class="text-sm text-green-700">{{ session('success') }}</p>
+                        <span style="font-size:13px; color:#166534;">{{ session('success') }}</span>
                     </div>
-                    <button onclick="this.parentElement.parentElement.remove()" class="text-green-400 hover:text-green-600">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </button>
+                    <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; color:#22C55E; font-size:16px;">✕</button>
                 </div>
             </div>
         @endif
 
         @if(session('error'))
-            <div class="mx-8 mt-4 flash-message">
-                <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg flex items-center justify-between">
-                    <div class="flex items-center">
-                        <svg class="h-5 w-5 text-red-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            <div style="margin:20px 32px 0;">
+                <div style="background:#FEF2F2; border-left:4px solid #EF4444; padding:12px 16px; border-radius:0 8px 8px 0; display:flex; align-items:center; justify-content:space-between;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <svg width="18" height="18" fill="none" stroke="#EF4444" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
-                        <p class="text-sm text-red-700">{{ session('error') }}</p>
+                        <span style="font-size:13px; color:#991B1B;">{{ session('error') }}</span>
                     </div>
-                    <button onclick="this.parentElement.parentElement.remove()" class="text-red-400 hover:text-red-600">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </button>
+                    <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; cursor:pointer; color:#EF4444; font-size:16px;">✕</button>
                 </div>
             </div>
         @endif
 
-        <!-- Page Content -->
-        <main class="flex-1 px-8 py-6">
+        <!-- Content -->
+        <main style="flex:1; padding:28px 32px;">
             @yield('content')
         </main>
 
         <!-- Footer -->
-        <footer class="px-8 py-4 border-t border-gray-200 bg-white">
-            <p class="text-sm text-gray-500">&copy; {{ date('Y') }} {{ config('app.name') }}. Barcha huquqlar himoyalangan.</p>
+        <footer style="padding:14px 32px; border-top:1px solid #E8E8E8; background:#fff;">
+            <p style="font-size:12px; color:#8899A8; margin:0;">&copy; {{ date('Y') }} {{ config('app.name') }}. Barcha huquqlar himoyalangan.</p>
         </footer>
 
     </div>

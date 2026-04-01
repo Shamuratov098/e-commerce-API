@@ -3,56 +3,94 @@
 @section('title', 'Kategoriyalar')
 
 @section('content')
+
 <!-- Page Header -->
-<div class="flex justify-between items-center mb-8">
-    <div>
-        <h1 class="text-3xl font-bold text-gray-800">Kategoriyalar</h1>
-        <p class="text-gray-600 mt-2">Barcha kategoriyalarni boshqarish</p>
-    </div>
-    <a href="{{ route('admin.categories.create') }}" class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors flex items-center">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+<div style="display:flex; align-items:center; justify-content:right; margin-bottom:24px;">
+    {{--<div>
+        <h1 style="font-size:22px; font-weight:700; color:#1C2434; margin:0 0 4px;">Kategoriyalar</h1>
+        <p style="font-size:13px; color:#637381; margin:0;">Barcha kategoriyalarni boshqarish</p>
+    </div>--}}
+    <a href="{{ route('admin.categories.create') }}"
+       style="display:inline-flex; align-items:center; gap:8px; padding:10px 20px; background:#5750F1; color:#fff; border-radius:8px; text-decoration:none; font-size:13px; font-weight:600; transition:background .2s;">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
         </svg>
         Yangi Kategoriya
     </a>
 </div>
 
-<!-- Categories Table -->
-<div class="bg-white rounded-lg shadow-md overflow-hidden">
-    <div class="overflow-x-auto">
-        <table class="w-full">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nomi</th>
-                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Slug</th>
-                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mahsulotlar</th>
-                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Yaratilgan</th>
-                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amallar</th>
+<!-- Table Card -->
+<div style="background:#fff; border-radius:12px; border:1px solid #F3F4F6; box-shadow:0 1px 4px rgba(0,0,0,.06); overflow:hidden;">
+
+    <!-- Table -->
+    <div style="overflow-x:auto;">
+        <table style="width:100%; border-collapse:collapse;">
+            <thead>
+                <tr style="background:#F7F9FC; border-bottom:1px solid #F3F4F6;">
+                    <th style="padding:12px 24px; text-align:left; font-size:11px; font-weight:600; color:#8899A8; text-transform:uppercase; letter-spacing:.06em;">ID</th>
+                    <th style="padding:12px 16px; text-align:left; font-size:11px; font-weight:600; color:#8899A8; text-transform:uppercase; letter-spacing:.06em;">Nomi</th>
+                    <th style="padding:12px 16px; text-align:left; font-size:11px; font-weight:600; color:#8899A8; text-transform:uppercase; letter-spacing:.06em;">Slug</th>
+                    <th style="padding:12px 16px; text-align:left; font-size:11px; font-weight:600; color:#8899A8; text-transform:uppercase; letter-spacing:.06em;">Mahsulotlar</th>
+                    <th style="padding:12px 16px; text-align:left; font-size:11px; font-weight:600; color:#8899A8; text-transform:uppercase; letter-spacing:.06em;">Yaratilgan</th>
+                    <th style="padding:12px 24px; text-align:left; font-size:11px; font-weight:600; color:#8899A8; text-transform:uppercase; letter-spacing:.06em;">Amallar</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200">
+            <tbody>
                 @forelse($categories as $category)
-                    <tr class="table-row-hover">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $category->id }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $category->name }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $category->slug }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $category->products_count ?? $category->products()->count() }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $category->created_at->format('d.m.Y') }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <div class="flex items-center space-x-3">
-                                <a href="{{ route('admin.categories.edit', $category) }}" class="text-blue-600 hover:text-blue-800 transition-colors" title="Tahrirlash">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    <tr style="border-top:1px solid #F3F4F6; transition:background .15s;" onmouseover="this.style.background='#F7F9FC'" onmouseout="this.style.background='#fff'">
+
+                        <!-- ID -->
+                        <td style="padding:14px 24px; font-size:13px; color:#8899A8; font-weight:500;">{{ $category->id }}</td>
+
+                        <!-- Nomi -->
+                        <td style="padding:14px 16px;">
+                            <div style="display:flex; align-items:center; gap:10px;">
+                              {{--  <div style="width:34px; height:34px; background:#EEF2FF; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                    <svg width="16" height="16" fill="none" stroke="#5750F1" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
                                     </svg>
+                                </div>--}}
+                                <span style="font-size:13px; font-weight:600; color:#1C2434;">{{ $category->title }}</span>
+                            </div>
+                        </td>
+
+                        <!-- Slug -->
+                        <td style="padding:14px 16px;">
+                            <span style="font-size:12px; color:#637381; background:#F7F9FC; padding:4px 10px; border-radius:6px; font-family:monospace;">{{ $category->slug }}</span>
+                        </td>
+
+                        <!-- Mahsulotlar soni -->
+                        <td style="padding:14px 16px;">
+                            <span style="font-size:13px; font-weight:600; color:#1C2434;">{{ $category->products()->count() }}</span>
+                            <span style="font-size:12px; color:#8899A8; margin-left:2px;">ta</span>
+                        </td>
+
+                        <!-- Yaratilgan -->
+                        <td style="padding:14px 16px; font-size:12px; color:#8899A8;">{{ $category->created_at->format('d M, Y') }}</td>
+
+                        <!-- Amallar -->
+                        <td style="padding:14px 24px;">
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <a href="{{ route('admin.categories.edit', $category) }}"
+                                   style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:#EEF2FF; color:#5750F1; border-radius:6px; text-decoration:none; font-size:12px; font-weight:600; transition:background .2s;"
+                                   onmouseover="this.style.background='#dde4ff'" onmouseout="this.style.background='#EEF2FF'">
+                                    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                    </svg>
+                                    Tahrirlash
                                 </a>
-                                <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" class="inline" onsubmit="return confirm('Rostdan ham bu kategoriyani o\'chirmoqchimisiz?');">
+
+                                <form action="{{ route('admin.categories.destroy', $category) }}" method="POST"
+                                      onsubmit="return confirm('Rostdan ham o\'chirmoqchimisiz?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-800 transition-colors" title="O'chirish">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    <button type="submit"
+                                            style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:#FEF2F2; color:#DC2626; border-radius:6px; border:none; cursor:pointer; font-size:12px; font-weight:600; transition:background .2s;"
+                                            onmouseover="this.style.background='#fee2e2'" onmouseout="this.style.background='#FEF2F2'">
+                                        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                         </svg>
+                                        O'chirish
                                     </button>
                                 </form>
                             </div>
@@ -60,15 +98,22 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="px-6 py-12 text-center">
-                            <div class="flex flex-col items-center">
-                                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                                    <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+                        <td colspan="6" style="padding:56px; text-align:center;">
+                            <div style="display:flex; flex-direction:column; align-items:center; gap:12px;">
+                                <div style="width:56px; height:56px; background:#F7F9FC; border-radius:12px; display:flex; align-items:center; justify-content:center;">
+                                    <svg width="28" height="28" fill="none" stroke="#8899A8" stroke-width="1.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
                                     </svg>
                                 </div>
-                                <p class="text-gray-500 text-lg">Kategoriyalar topilmadi</p>
-                                <a href="{{ route('admin.categories.create') }}" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium">Birinchi kategoriyani yaratish &rarr;</a>
+                                <p style="font-size:15px; font-weight:600; color:#1C2434; margin:0;">Kategoriyalar topilmadi</p>
+                                <p style="font-size:13px; color:#8899A8; margin:0;">Birinchi kategoriyani yarating</p>
+                                <a href="{{ route('admin.categories.create') }}"
+                                   style="margin-top:4px; display:inline-flex; align-items:center; gap:6px; padding:8px 16px; background:#5750F1; color:#fff; border-radius:8px; text-decoration:none; font-size:13px; font-weight:600;">
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                                    </svg>
+                                    Yangi Kategoriya
+                                </a>
                             </div>
                         </td>
                     </tr>
@@ -78,10 +123,7 @@
     </div>
 
     <!-- Pagination -->
-    @if($categories->hasPages())
-        <div class="px-6 py-4 border-t border-gray-200">
-            {{ $categories->links() }}
-        </div>
-    @endif
+    {{ $categories->links() }}
 </div>
+
 @endsection

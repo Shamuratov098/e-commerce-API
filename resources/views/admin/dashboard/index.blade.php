@@ -3,310 +3,383 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<!-- Page Header -->
-<div class="mb-8">
-    <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
-    <p class="text-gray-600 mt-2">Boshqaruv paneliga xush kelibsiz</p>
-</div>
 
-<!-- Statistics Cards -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-    <!-- Products Card -->
-    <div class="bg-white rounded-lg shadow-md p-6 stat-card">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-sm font-medium text-gray-600">Jami Mahsulotlar</p>
-                <p class="text-2xl font-bold text-gray-800 mt-1">{{ $stats['products']['total'] }}</p>
-            </div>
-            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+  {{--  <!-- Page Header -->
+    <div style="margin-bottom:28px;">
+        <h1 style="font-size:24px; font-weight:700; color:#1C2434; margin:0 0 4px;">Dashboard</h1>
+        <p style="font-size:14px; color:#637381; margin:0;">Biznesingizning umumiy ko'rinishi</p>
+    </div>--}}
+
+    <!-- ==================== STATISTICS CARDS ==================== -->
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-bottom:24px;">
+
+        <!-- Total Views / Products -->
+        <div
+            style="background:#fff; border-radius:12px; padding:24px; box-shadow:0 1px 4px rgba(0,0,0,.06); border:1px solid #F3F4F6;">
+            <div
+                style="width:48px; height:48px; background:#EEF2FF; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
+                <svg width="24" height="24" fill="none" stroke="#5750F1" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                 </svg>
             </div>
-        </div>
-        <div class="mt-4">
-            <div class="flex justify-between text-sm mb-1">
-                <span class="text-gray-600">Faol: {{ $stats['products']['active'] }}</span>
-                <span class="text-blue-600 font-medium">{{ $stats['products']['progress'] }}%</span>
+            <div style="display:flex; align-items:flex-end; justify-content:space-between;">
+                <div>
+                    <p style="font-size:28px; font-weight:700; color:#1C2434; margin:0 0 4px;">{{ $stats['products']['total'] }}</p>
+                    <p style="font-size:13px; color:#637381; margin:0;">Jami Mahsulotlar</p>
+                </div>
+                <div style="display:flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px;
+                {{ $stats['products']['growth']['is_positive'] ? 'background:#F0FDF4; color:#16A34A;' : 'background:#FEF2F2; color:#DC2626;' }}">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
+                         viewBox="0 0 24 24">
+                        @if($stats['products']['growth']['is_positive'])
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                        @else
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                        @endif
+                    </svg>
+                    <span style="font-size:12px; font-weight:600;">{{ $stats['products']['growth']['value'] }}%</span>
+                </div>
             </div>
-            <div class="w-full bg-gray-200 rounded-full h-2">
-                <div class="progress-bar bg-blue-600 h-2 rounded-full" style="width: {{ $stats['products']['progress'] }}%"></div>
-            </div>
         </div>
-    </div>
 
-    <!-- Orders Card -->
-    <div class="bg-white rounded-lg shadow-md p-6 stat-card">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-sm font-medium text-gray-600">Jami Buyurtmalar</p>
-                <p class="text-2xl font-bold text-gray-800 mt-1">{{ $stats['orders']['total'] }}</p>
-            </div>
-            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        <!-- Orders -->
+        <div
+            style="background:#fff; border-radius:12px; padding:24px; box-shadow:0 1px 4px rgba(0,0,0,.06); border:1px solid #F3F4F6;">
+            <div
+                style="width:48px; height:48px; background:#F0FDF4; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
+                <svg width="24" height="24" fill="none" stroke="#16A34A" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
                 </svg>
             </div>
-        </div>
-        <div class="mt-4">
-            <div class="flex justify-between text-sm mb-1">
-                <span class="text-gray-600">Yetkazilgan: {{ $stats['orders']['delivered'] }}</span>
-                <span class="text-green-600 font-medium">{{ $stats['orders']['progress'] }}%</span>
+            <div style="display:flex; align-items:flex-end; justify-content:space-between;">
+                <div>
+                    <p style="font-size:28px; font-weight:700; color:#1C2434; margin:0 0 4px;">{{ $stats['orders']['total'] }}</p>
+                    <p style="font-size:13px; color:#637381; margin:0;">Jami Buyurtmalar</p>
+                </div>
+                <div style="display:flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px;
+                {{ $stats['orders']['growth']['is_positive'] ? 'background:#F0FDF4; color:#16A34A;' : 'background:#FEF2F2; color:#DC2626;' }}">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
+                         viewBox="0 0 24 24">
+                        @if($stats['orders']['growth']['is_positive'])
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                        @else
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                        @endif
+                    </svg>
+                    <span style="font-size:12px; font-weight:600;">{{ $stats['orders']['growth']['value'] }}%</span>
+                </div>
             </div>
-            <div class="w-full bg-gray-200 rounded-full h-2">
-                <div class="progress-bar bg-green-600 h-2 rounded-full" style="width: {{ $stats['orders']['progress'] }}%"></div>
-            </div>
         </div>
-    </div>
 
-    <!-- Users Card -->
-    <div class="bg-white rounded-lg shadow-md p-6 stat-card">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-sm font-medium text-gray-600">Foydalanuvchilar</p>
-                <p class="text-2xl font-bold text-gray-800 mt-1">{{ $stats['users']['total'] }}</p>
-            </div>
-            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+        <!-- Users -->
+        <div
+            style="background:#fff; border-radius:12px; padding:24px; box-shadow:0 1px 4px rgba(0,0,0,.06); border:1px solid #F3F4F6;">
+            <div
+                style="width:48px; height:48px; background:#FDF4FF; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
+                <svg width="24" height="24" fill="none" stroke="#9333EA" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                 </svg>
             </div>
-        </div>
-        <div class="mt-4">
-            <div class="flex justify-between text-sm mb-1">
-                <span class="text-gray-600">Bu oy: {{ $stats['users']['new_this_month'] }}</span>
-                <span class="text-purple-600 font-medium">{{ $stats['users']['progress'] }}%</span>
+            <div style="display:flex; align-items:flex-end; justify-content:space-between;">
+                <div>
+                    <p style="font-size:28px; font-weight:700; color:#1C2434; margin:0 0 4px;">{{ $stats['users']['total'] }}</p>
+                    <p style="font-size:13px; color:#637381; margin:0;">Foydalanuvchilar</p>
+                </div>
+                <div style="display:flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px;
+                {{ $stats['users']['growth']['is_positive'] ? 'background:#F0FDF4; color:#16A34A;' : 'background:#FEF2F2; color:#DC2626;' }}">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
+                         viewBox="0 0 24 24">
+                        @if($stats['users']['growth']['is_positive'])
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                        @else
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                        @endif
+                    </svg>
+                    <span style="font-size:12px; font-weight:600;">{{ $stats['users']['growth']['value'] }}%</span>
+                </div>
             </div>
-            <div class="w-full bg-gray-200 rounded-full h-2">
-                <div class="progress-bar bg-purple-600 h-2 rounded-full" style="width: {{ $stats['users']['progress'] }}%"></div>
-            </div>
         </div>
-    </div>
 
-    <!-- Revenue Card -->
-    <div class="bg-white rounded-lg shadow-md p-6 stat-card">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-sm font-medium text-gray-600">Jami Daromad</p>
-                <p class="text-2xl font-bold text-gray-800 mt-1">${{ number_format($stats['revenue']['total'], 2) }}</p>
-            </div>
-            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
-                <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        <!-- Revenue -->
+        <div
+            style="background:#fff; border-radius:12px; padding:24px; box-shadow:0 1px 4px rgba(0,0,0,.06); border:1px solid #F3F4F6;">
+            <div
+                style="width:48px; height:48px; background:#FFFBEB; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
+                <svg width="24" height="24" fill="none" stroke="#D97706" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
             </div>
-        </div>
-        <div class="mt-4">
-            <div class="flex justify-between text-sm mb-1">
-                <span class="text-gray-600">Bu oy: ${{ number_format($stats['revenue']['this_month'], 2) }}</span>
-                <span class="text-yellow-600 font-medium">{{ $stats['revenue']['progress'] }}%</span>
+            <div style="display:flex; align-items:flex-end; justify-content:space-between;">
+                <div>
+                    <p style="font-size:28px; font-weight:700; color:#1C2434; margin:0 0 4px;">
+                        ${{ number_format($stats['revenue']['total'], 0) }}</p>
+                    <p style="font-size:13px; color:#637381; margin:0;">Jami Daromad</p>
+                </div>
+                <div style="display:flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px;
+                {{ $stats['revenue']['growth']['is_positive'] ? 'background:#F0FDF4; color:#16A34A;' : 'background:#FEF2F2; color:#DC2626;' }}">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
+                         viewBox="0 0 24 24">
+                        @if($stats['revenue']['growth']['is_positive'])
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                        @else
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                        @endif
+                    </svg>
+                    <span style="font-size:12px; font-weight:600;">{{ $stats['revenue']['growth']['value'] }}%</span>
+                </div>
             </div>
-            <div class="w-full bg-gray-200 rounded-full h-2">
-                <div class="progress-bar bg-yellow-600 h-2 rounded-full" style="width: {{ $stats['revenue']['progress'] }}%"></div>
+        </div>
+
+    </div>
+
+    <!-- ==================== CHARTS SECTION ==================== -->
+    <div style="display:grid; grid-template-columns:2fr 1fr; gap:20px; margin-bottom:24px;">
+
+        <!-- Main Chart -->
+        <div
+            style="background:#fff; border-radius:12px; padding:24px; box-shadow:0 1px 4px rgba(0,0,0,.06); border:1px solid #F3F4F6;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+                <div>
+                    <h3 style="font-size:16px; font-weight:700; color:#1C2434; margin:0 0 2px;">Daromad Ko'rinishi</h3>
+                    <p style="font-size:12px; color:#637381; margin:0;">Oy bo'yicha daromad statistikasi</p>
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <button onclick="updateChart('daily')" id="btn-daily"
+                            style="padding:6px 14px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer; border:none; background:#5750F1; color:#fff; transition:all .2s;">
+                        Kunlik
+                    </button>
+                    <button onclick="updateChart('monthly')" id="btn-monthly"
+                            style="padding:6px 14px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer; border:1px solid #E8E8E8; background:#fff; color:#637381; transition:all .2s;">
+                        Oylik
+                    </button>
+                    <button onclick="updateChart('yearly')" id="btn-yearly"
+                            style="padding:6px 14px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer; border:1px solid #E8E8E8; background:#fff; color:#637381; transition:all .2s;">
+                        Yillik
+                    </button>
+                </div>
+            </div>
+            <div id="mainChart"></div>
+
+            <!-- Summary -->
+            <div
+                style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px; padding-top:20px; border-top:1px solid #F3F4F6;">
+                <div style="text-align:center;">
+                    <p style="font-size:20px; font-weight:700; color:#1C2434; margin:0 0 4px;">
+                        ${{ number_format($stats['revenue']['this_month'], 0) }}</p>
+                    <p style="font-size:12px; color:#637381; margin:0;">Bu oylik daromad</p>
+                </div>
+                <div style="text-align:center; border-left:1px solid #F3F4F6;">
+                    <p style="font-size:20px; font-weight:700; color:#1C2434; margin:0 0 4px;">
+                        ${{ number_format($stats['revenue']['total'], 0) }}</p>
+                    <p style="font-size:12px; color:#637381; margin:0;">Jami daromad</p>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Charts Section -->
-<div class="bg-white rounded-lg shadow-md p-6 mb-8">
-    <div class="flex items-center justify-between mb-6">
-        <h2 class="text-xl font-bold text-gray-800">Daromad Statistikasi</h2>
-        <div class="flex space-x-2">
-            <button onclick="updateChart('daily')" id="btn-daily" class="px-4 py-2 text-sm font-medium bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors chart-btn">Kunlik</button>
-            <button onclick="updateChart('monthly')" id="btn-monthly" class="px-4 py-2 text-sm font-medium bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors chart-btn">Oylik</button>
-            <button onclick="updateChart('yearly')" id="btn-yearly" class="px-4 py-2 text-sm font-medium bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors chart-btn">Yillik</button>
-        </div>
-    </div>
-    <div id="revenueChart" class="w-full h-80"></div>
-</div>
+        <!-- Weekly Profit Chart -->
+        <div
+            style="background:#fff; border-radius:12px; padding:24px; box-shadow:0 1px 4px rgba(0,0,0,.06); border:1px solid #F3F4F6;">
+            <div style="margin-bottom:20px;">
+                <h3 style="font-size:16px; font-weight:700; color:#1C2434; margin:0 0 2px;">Haftalik Foyda</h3>
+                <p style="font-size:12px; color:#637381; margin:0;">So'nggi 7 kunlik ko'rsatkich</p>
+            </div>
+            <div id="weeklyChart"></div>
 
-<!-- Recent Orders and Users -->
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-    <!-- Recent Orders -->
-    <div class="bg-white rounded-lg shadow-md">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-bold text-gray-800">Oxirgi Buyurtmalar</h3>
+            <!-- Stats -->
+            <div style="margin-top:16px; padding-top:16px; border-top:1px solid #F3F4F6;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <span style="font-size:12px; color:#637381;">Bu oy yangi buyurtmalar</span>
+                    <span
+                        style="font-size:13px; font-weight:600; color:#1C2434;">{{ $stats['orders']['this_month'] }}</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <span style="font-size:12px; color:#637381;">Bu oy yangi foydalanuvchilar</span>
+                    <span
+                        style="font-size:13px; font-weight:600; color:#1C2434;">{{ $stats['users']['this_month'] }}</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:12px; color:#637381;">Bu oy yangi mahsulotlar</span>
+                    <span
+                        style="font-size:13px; font-weight:600; color:#1C2434;">{{ $stats['products']['this_month'] }}</span>
+                </div>
+            </div>
         </div>
-        <div class="overflow-x-auto">
-            <table class="w-full">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mijoz</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Summa</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    </tr>
+
+    </div>
+
+    <!-- ==================== TABLES SECTION ==================== -->
+    <div style="display:grid; grid-template-columns:3fr 2fr; gap:20px;">
+
+        <!-- Recent Orders -->
+        <div
+            style="background:#fff; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,.06); border:1px solid #F3F4F6; overflow:hidden;">
+            <div
+                style="padding:20px 24px; border-bottom:1px solid #F3F4F6; display:flex; justify-content:space-between; align-items:center;">
+                <h3 style="font-size:16px; font-weight:700; color:#1C2434; margin:0;">Oxirgi Buyurtmalar</h3>
+                <a href="#" style="font-size:13px; color:#5750F1; text-decoration:none; font-weight:500;">Barchasini
+                    ko'rish →</a>
+            </div>
+            <table style="width:100%; border-collapse:collapse;">
+                <thead>
+                <tr style="background:#F7F9FC;">
+                    <th style="padding:12px 24px; text-align:left; font-size:11px; font-weight:600; color:#8899A8; text-transform:uppercase; letter-spacing:.06em;">
+                        Mijoz
+                    </th>
+                    <th style="padding:12px 16px; text-align:left; font-size:11px; font-weight:600; color:#8899A8; text-transform:uppercase; letter-spacing:.06em;">
+                        Summa
+                    </th>
+                    <th style="padding:12px 16px; text-align:left; font-size:11px; font-weight:600; color:#8899A8; text-transform:uppercase; letter-spacing:.06em;">
+                        Status
+                    </th>
+                    <th style="padding:12px 24px; text-align:left; font-size:11px; font-weight:600; color:#8899A8; text-transform:uppercase; letter-spacing:.06em;">
+                        Sana
+                    </th>
+                </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200">
-                    @forelse($recentOrders as $order)
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#{{ $order->id }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $order->user->name ?? 'Noma\'lum' }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${{ number_format($order->total_amount, 2) }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                    @if($order->status === 'delivered') bg-green-100 text-green-800
-                                    @elseif($order->status === 'pending') bg-yellow-100 text-yellow-800
-                                    @elseif($order->status === 'processing') bg-blue-100 text-blue-800
-                                    @elseif($order->status === 'cancelled') bg-red-100 text-red-800
-                                    @else bg-gray-100 text-gray-800 @endif">
-                                    {{ ucfirst($order->status) }}
-                                </span>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="px-6 py-4 text-center text-gray-500">Buyurtmalar yo\'q</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-        <div class="px-6 py-4 border-t border-gray-200">
-            <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Barcha buyurtmalarni ko\'rish &rarr;</a>
-        </div>
-    </div>
-
-    <!-- Recent Users -->
-    <div class="bg-white rounded-lg shadow-md">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-bold text-gray-800">Yangi Foydalanuvchilar</h3>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="w-full">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ism</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sana</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    @forelse($recentUsers as $user)
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center mr-3">
-                                        <span class="text-indigo-600 font-medium text-sm">{{ substr($user->name, 0, 1) }}</span>
-                                    </div>
-                                    <span class="text-sm text-gray-900">{{ $user->name }}</span>
+                <tbody>
+                @forelse($recentOrders as $order)
+                    <tr style="border-top:1px solid #F3F4F6;">
+                        <td style="padding:14px 24px;">
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <div
+                                    style="width:34px; height:34px; background:#EEF2FF; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                                    <span
+                                        style="font-size:12px; font-weight:700; color:#5750F1;">{{ strtoupper(substr($order->user->name ?? 'N', 0, 1)) }}</span>
                                 </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $user->email }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $user->created_at->format('d.m.Y') }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" class="px-6 py-4 text-center text-gray-500">Foydalanuvchilar yo\'q</td>
-                        </tr>
-                    @endforelse
+                                <div>
+                                    <p style="font-size:13px; font-weight:600; color:#1C2434; margin:0;">{{ $order->user->name ?? 'Noma\'lum' }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="padding:14px 16px; font-size:13px; font-weight:600; color:#1C2434;">
+                            ${{ number_format($order->total_amount, 2) }}</td>
+                        <td style="padding:14px 16px;">
+                            <span style="padding:4px 10px; border-radius:20px; font-size:11px; font-weight:600;
+                                @if($order->status === 'delivered') background:#F0FDF4; @elseif($order->status === 'pending') background:#FFFBEB; @elseif($order->status === 'processing') background:#EEF2FF; color:#5750F1;
+                                @elseif($order->status === 'cancelled') background:#FEF2F2; @else background:#F3F4F6;@endif">
+                                {{ ucfirst($order->status) }}
+                            </span>
+                        </td>
+                        <td style="padding:14px 24px; font-size:12px; color:#8899A8;">{{ $order->created_at->format('d M, Y') }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" style="padding:32px; text-align:center; color:#8899A8; font-size:13px;">
+                            Buyurtmalar yo'q
+                        </td>
+                    </tr>
+                @endforelse
                 </tbody>
             </table>
         </div>
-        <div class="px-6 py-4 border-t border-gray-200">
-            <a href="#" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Barcha foydalanuvchilarni ko\'rish &rarr;</a>
+
+        <!-- Recent Users -->
+        <div
+            style="background:#fff; border-radius:12px; box-shadow:0 1px 4px rgba(0,0,0,.06); border:1px solid #F3F4F6; overflow:hidden;">
+            <div
+                style="padding:20px 24px; border-bottom:1px solid #F3F4F6; display:flex; justify-content:space-between; align-items:center;">
+                <h3 style="font-size:16px; font-weight:700; color:#1C2434; margin:0;">Yangi Foydalanuvchilar</h3>
+                <a href="#" style="font-size:13px; color:#5750F1; text-decoration:none; font-weight:500;">Barchasini
+                    ko'rish →</a>
+            </div>
+            <ul style="list-style:none; margin:0; padding:0;">
+                @forelse($recentUsers as $user)
+                    <li style="display:flex; align-items:center; gap:12px; padding:14px 24px; border-top:1px solid #F3F4F6;">
+                        <div
+                            style="width:40px; height:40px; background:#EEF2FF; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                            <span
+                                style="font-size:15px; font-weight:700; color:#5750F1;">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                        </div>
+                        <div style="flex:1; min-width:0;">
+                            <p style="font-size:13px; font-weight:600; color:#1C2434; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ $user->name }}</p>
+                            <p style="font-size:11px; color:#8899A8; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ $user->email }}</p>
+                        </div>
+                        <span
+                            style="font-size:11px; color:#8899A8; white-space:nowrap;">{{ $user->created_at->format('d M') }}</span>
+                    </li>
+                @empty
+                    <li style="padding:32px; text-align:center; color:#8899A8; font-size:13px;">Foydalanuvchilar yo'q
+                    </li>
+                @endforelse
+            </ul>
         </div>
+
     </div>
-</div>
+
 @endsection
 
 @section('scripts')
-<script>
-    // Chart data from PHP
-    const dailyStats = @json($dailyStats);
-    const monthlyStats = @json($monthlyStats);
-    const yearlyStats = @json($yearlyStats);
+    <script>
+        const dailyStats = @json($dailyStats);
+        const monthlyStats = @json($monthlyStats);
+        const yearlyStats = @json($yearlyStats);
 
-    let currentChart = null;
+        let mainChart = null;
 
-    function renderChart(labels, data, title) {
-        const options = {
-            series: [{
-                name: 'Daromad ($)',
-                data: data
-            }],
-            chart: {
-                type: 'area',
-                height: 320,
-                toolbar: {
-                    show: false
-                }
-            },
-            colors: ['#4f46e5'],
-            fill: {
-                type: 'gradient',
-                gradient: {
-                    shadeIntensity: 1,
-                    opacityFrom: 0.7,
-                    opacityTo: 0.2,
-                    stops: [0, 100]
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                curve: 'smooth',
-                width: 2
-            },
-            xaxis: {
-                categories: labels,
-                axisBorder: {
-                    show: false
+        function renderMainChart(labels, data) {
+            if (mainChart) mainChart.destroy();
+
+            mainChart = new ApexCharts(document.querySelector('#mainChart'), {
+                series: [{name: 'Daromad ($)', data}],
+                chart: {type: 'area', height: 220, toolbar: {show: false}, sparkline: {enabled: false}},
+                colors: ['#5750F1'],
+                fill: {type: 'gradient', gradient: {shadeIntensity: 1, opacityFrom: 0.35, opacityTo: 0.02}},
+                stroke: {curve: 'smooth', width: 2.5},
+                dataLabels: {enabled: false},
+                xaxis: {
+                    categories: labels,
+                    axisBorder: {show: false},
+                    axisTicks: {show: false},
+                    labels: {style: {colors: '#8899A8', fontSize: '11px'}}
                 },
-                axisTicks: {
-                    show: false
-                }
-            },
-            yaxis: {
-                labels: {
-                    formatter: function (value) {
-                        return '$' + value.toFixed(0);
-                    }
-                }
-            },
-            grid: {
-                borderColor: '#e5e7eb',
-                strokeDashArray: 4
-            },
-            tooltip: {
-                y: {
-                    formatter: function (value) {
-                        return '$' + value.toFixed(2);
-                    }
-                }
-            }
-        };
-
-        if (currentChart) {
-            currentChart.destroy();
+                yaxis: {labels: {formatter: v => '$' + v.toFixed(0), style: {colors: '#8899A8', fontSize: '11px'}}},
+                grid: {borderColor: '#F3F4F6', strokeDashArray: 3},
+                tooltip: {y: {formatter: v => '$' + v.toFixed(2)}}
+            });
+            mainChart.render();
         }
 
-        currentChart = new ApexCharts(document.querySelector("#revenueChart"), options);
-        currentChart.render();
-    }
-
-    function updateChart(type) {
-        // Update button styles
-        document.querySelectorAll('.chart-btn').forEach(btn => {
-            btn.classList.remove('bg-indigo-600', 'text-white');
-            btn.classList.add('bg-gray-200', 'text-gray-700');
-        });
-        document.getElementById('btn-' + type).classList.remove('bg-gray-200', 'text-gray-700');
-        document.getElementById('btn-' + type).classList.add('bg-indigo-600', 'text-white');
-
-        // Render chart
-        if (type === 'daily') {
-            renderChart(dailyStats.labels, dailyStats.data, 'Kunlik Daromad');
-        } else if (type === 'monthly') {
-            renderChart(monthlyStats.labels, monthlyStats.data, 'Oylik Daromad');
-        } else if (type === 'yearly') {
-            renderChart(yearlyStats.labels, yearlyStats.data, 'Yillik Daromad');
+        function updateChart(type) {
+            const btns = ['daily', 'monthly', 'yearly'];
+            btns.forEach(b => {
+                const el = document.getElementById('btn-' + b);
+                if (b === type) {
+                    el.style.background = '#5750F1';
+                    el.style.color = '#fff';
+                    el.style.border = 'none';
+                } else {
+                    el.style.background = '#fff';
+                    el.style.color = '#637381';
+                    el.style.border = '1px solid #E8E8E8';
+                }
+            });
+            const map = {daily: dailyStats, monthly: monthlyStats, yearly: yearlyStats};
+            renderMainChart(map[type].labels, map[type].data);
         }
-    }
 
-    // Initial render - daily chart
-    renderChart(dailyStats.labels, dailyStats.data, 'Kunlik Daromad');
-</script>
+        // Weekly bar chart
+        new ApexCharts(document.querySelector('#weeklyChart'), {
+            series: [{name: 'Daromad', data: dailyStats.data}],
+            chart: {type: 'bar', height: 200, toolbar: {show: false}},
+            colors: ['#5750F1'],
+            plotOptions: {bar: {borderRadius: 4, columnWidth: '55%'}},
+            dataLabels: {enabled: false},
+            xaxis: {
+                categories: dailyStats.labels,
+                axisBorder: {show: false},
+                axisTicks: {show: false},
+                labels: {style: {colors: '#8899A8', fontSize: '10px'}}
+            },
+            yaxis: {labels: {formatter: v => '$' + v.toFixed(0), style: {colors: '#8899A8', fontSize: '10px'}}},
+            grid: {borderColor: '#F3F4F6', strokeDashArray: 3},
+            tooltip: {y: {formatter: v => '$' + v.toFixed(2)}}
+        }).render();
+
+        // Init
+        renderMainChart(dailyStats.labels, dailyStats.data);
+    </script>
 @endsection
